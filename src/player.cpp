@@ -6,15 +6,15 @@
 
 //コンストラクタ
 Player::Player() {
-    position = (Vector3){0.0f, 0.0f, 0.0f};
-    size = (Vector3){0.8f, 1.8f, 0.8f};
+    position = Vector3{0.0f, 0.0f, 0.0f};
+    size = Vector3{0.8f, 1.8f, 0.8f};
     eye_height = 1.6f;
     crouch_depth = 0.0f;
 
     // カメラの設定
-    pov.position = (Vector3){0.0f, eye_height, 0.0f}; //カメラの場所
-    pov.target = (Vector3){1.0f, eye_height, 0.0f}; //カメラがどこを見るか
-    pov.up = (Vector3){0.0f, 1.0f, 0.0f}; //カメラの上方向(カメラの角度)
+    pov.position = Vector3{0.0f, eye_height, 0.0f}; //カメラの場所
+    pov.target = Vector3{1.0f, eye_height, 0.0f}; //カメラがどこを見るか
+    pov.up = Vector3{0.0f, 1.0f, 0.0f}; //カメラの上方向(カメラの角度)
     pov.fovy = 60.0f; //視野角
     pov.projection = CAMERA_PERSPECTIVE; //遠近感のある投影
 
@@ -29,9 +29,9 @@ BoundingBox Player::GetHitbox(Vector3 d_pos) { //d_posはプレイヤーの座�
     float hy = size.y / 2.0f;
     float hz = size.z / 2.0f;
 
-    return (BoundingBox) {
-        (Vector3){position.x + d_pos.x - hx, position.y + d_pos.y, position.z + d_pos.z - hz},
-        (Vector3){position.x + d_pos.x + hx, position.y + d_pos.y + size.y, position.z + d_pos.z + hz}
+    return BoundingBox {
+        Vector3{position.x + d_pos.x - hx, position.y + d_pos.y, position.z + d_pos.z - hz},
+        Vector3{position.x + d_pos.x + hx, position.y + d_pos.y + size.y, position.z + d_pos.z + hz}
     };
 }
 
@@ -66,10 +66,10 @@ void Player::Move(const std::vector<StageObject>& obj) {
         for (const auto& item : obj) {
             if (item.GetBoundingBox().max.y <= this->position.y + 0.05f) continue; //床を検知した場合横移動の判定から除外する, 0.05fは乗り越え許容高さ
 
-            if (CheckCollisionBoxes(GetHitbox((Vector3){vec_add.x * speed * GetFrameTime(), 0, 0}), {item.GetBoundingBox().min, item.GetBoundingBox().max})) {
+            if (CheckCollisionBoxes(GetHitbox(Vector3{vec_add.x * speed * GetFrameTime(), 0, 0}), {item.GetBoundingBox().min, item.GetBoundingBox().max})) {
                 move_x = false; //一つでもオブジェクトへの衝突判定があればその方向へは移動不可
             }
-            if (CheckCollisionBoxes(GetHitbox((Vector3){0, 0, vec_add.z * speed * GetFrameTime()}), {item.GetBoundingBox().min, item.GetBoundingBox().max})) {
+            if (CheckCollisionBoxes(GetHitbox(Vector3{0, 0, vec_add.z * speed * GetFrameTime()}), {item.GetBoundingBox().min, item.GetBoundingBox().max})) {
                 move_z = false;
             }
         }

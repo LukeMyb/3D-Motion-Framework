@@ -5,8 +5,8 @@
 StageObject::StageObject(Vector3 cent, Vector3 siz, Color c) {
     this->pos = cent;
     this->size = siz;
-    this->box.min = (Vector3){pos.x, pos.y, pos.z};
-    this->box.max = (Vector3){pos.x + size.x, pos.y + size.y, pos.z + size.z};
+    this->box.min = Vector3{pos.x, pos.y, pos.z};
+    this->box.max = Vector3{pos.x + size.x, pos.y + size.y, pos.z + size.z};
 
     this->color = c;
     this->is_visible = true;
